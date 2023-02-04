@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "ballball-be"
+name = "truyentk"
 version = "0.1.0"
 description = ""
 authors = ["Thanh Nguyen <nvthanh1804@gmail.com>"]
@@ -10,6 +10,10 @@ packages = [{ include = "app" }]
 python = "^3.10"
 fastapi = "^0.89.1"
 uvicorn = "^0.20.0"
+aioredis = "^2.0.1"
+sqlalchemy = "^2.0.1"
+python-jose = "^3.3.0"
+passlib = "^1.7.4"
 
 
 [build-system]

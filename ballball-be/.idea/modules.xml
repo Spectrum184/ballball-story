@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/ballball-be.iml" filepath="$PROJECT_DIR$/.idea/ballball-be.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../truyentk-be/.idea/truyentk-be.iml" filepath="$PROJECT_DIR$/../truyentk-be/.idea/truyentk-be.iml" />
     </modules>
   </component>
 </project>
