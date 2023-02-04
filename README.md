@@ -6,6 +6,7 @@ From ballball with love!
 
 - Fast [api](https://fastapi.tiangolo.com/)
 - Framework Js(Express JS, NestJS, Serverless)
+- Php(Laravel)
 
 ## Web
 
