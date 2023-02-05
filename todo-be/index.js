@@ -5,10 +5,12 @@ const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
 const routers = require("./router");
+const cookieParser = require("cookie-parser");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
 
 const APP_PORT = parseInt(process.env.PORT) || 5000;
 const MONGO_URI = process.env.MONGO_URI;

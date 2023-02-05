@@ -19,8 +19,6 @@ const authCtrl = {
                 username,
             });
 
-            console.log(isExistUser);
-
             if (isExistUser) {
                 return res.status(401).json({
                     message: "Fuck you noob",
@@ -47,7 +45,7 @@ const authCtrl = {
             );
             const refreshToken = await jwt.sign(
                 { id: newUser._id },
-                process.env.ACCESS_TOKEN_SECRET,
+                process.env.REFRESH_TOKEN_SECRET,
                 {
                     expiresIn: "30d",
                 }
@@ -116,7 +114,7 @@ const authCtrl = {
             );
             const refreshToken = await jwt.sign(
                 { id: user._id },
-                process.env.ACCESS_TOKEN_SECRET,
+                process.env.REFRESH_TOKEN_SECRET,
                 {
                     expiresIn: "30d",
                 }
@@ -136,6 +134,69 @@ const authCtrl = {
                     password: "",
                 },
             });
+        } catch (error) {
+            return res.status(500).json({
+                message: error.message || "Ok",
+            });
+        }
+    },
+    logout: async (req, res) => {
+        try {
+            res.clearCookie("refresh", { path: "/refresh" });
+
+            return res.status(200).json({
+                message: "Done!",
+            });
+        } catch (error) {
+            return res.status(500).json({
+                message: error.message || "Ok",
+            });
+        }
+    },
+    refresh: async (req, res) => {
+        try {
+            const refreshToken = req.cookies.refresh;
+
+            if (!refreshToken) {
+                return res.status(401).json({
+                    message: message || "Ok",
+                });
+            }
+
+            jwt.verify(
+                refreshToken,
+                process.env.REFRESH_TOKEN_SECRET,
+                async (err, result) => {
+                    if (err) {
+                        return res.status(401).json({
+                            message: err.message || "Ok",
+                        });
+                    }
+
+                    const user = await User.findById(result.id).select(
+                        "-password"
+                    );
+
+                    if (!user) {
+                        return res.status(401).json({
+                            message: message || "Ok",
+                        });
+                    }
+
+                    const accessToken = await jwt.sign(
+                        { id: user._id },
+                        process.env.ACCESS_TOKEN_SECRET,
+                        {
+                            expiresIn: "1d",
+                        }
+                    );
+
+                    return res.status(200).json({
+                        accessToken,
+                        user,
+                    });
+                }
+            );
         } catch (error) {
             return res.status(500).json({
                 message: error.message || "Ok",
