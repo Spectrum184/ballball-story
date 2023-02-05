@@ -12,6 +12,7 @@ const userCtrl = {
 
             const newPath = await uploader(filePath);
 
+            // remove file at folder uploads
             fs.unlinkSync(filePath);
             console.log(newPath);
 
