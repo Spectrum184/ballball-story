@@ -38,6 +38,8 @@ mongoose.connect(
     }
 );
 
+app.use(express.static("static"));
+
 app.listen(APP_PORT, () => {
     console.log("🔥 Server listening on port:" + APP_PORT);
 });

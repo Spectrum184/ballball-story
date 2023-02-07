@@ -52,16 +52,17 @@ const authCtrl = {
             );
 
             // set refreshToken to cookies
-            res.cookie("refresh", refreshToken, {
-                httpOnly: true,
-                path: "/refresh",
-                maxAge: 30 * 7 * 24 * 60 * 60 * 1000, //30 days
-            });
+            // res.cookie("refresh", refreshToken, {
+            //     httpOnly: true,
+            //     path: "/refresh",
+            //     maxAge: 30 * 7 * 24 * 60 * 60 * 1000, //30 days
+            // });
 
             await newUser.save();
 
             return res.status(200).json({
                 accessToken,
+                refreshToken,
                 user: {
                     ...newUser._doc,
                     password: "",
@@ -121,14 +122,15 @@ const authCtrl = {
             );
 
             // set refreshToken to cookies
-            res.cookie("refresh", refreshToken, {
-                httpOnly: true,
-                path: "/refresh",
-                maxAge: 30 * 7 * 24 * 60 * 60 * 1000, //30 days
-            });
+            // res.cookie("refresh", refreshToken, {
+            //     httpOnly: true,
+            //     path: "/refresh",
+            //     maxAge: 30 * 7 * 24 * 60 * 60 * 1000, //30 days
+            // });
 
             return res.status(200).json({
                 accessToken,
+                refreshToken,
                 user: {
                     ...user._doc,
                     password: "",
@@ -191,8 +193,17 @@ const authCtrl = {
                         }
                     );
 
+                    const refreshToken = await jwt.sign(
+                        { id: user._id },
+                        process.env.REFRESH_TOKEN_SECRET,
+                        {
+                            expiresIn: "30d",
+                        }
+                    );
+
                     return res.status(200).json({
                         accessToken,
+                        refreshToken,
                         user,
                     });
                 }
