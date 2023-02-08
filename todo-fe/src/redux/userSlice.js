@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 export const register = createAsyncThunk(
     "user/register",
-    async ({ username, password, email, rememberMe }, action) => {
+    async ({ username, password, email, rememberMe }) => {
         const res = await axios.post("/register", {
             username,
             password,
@@ -15,6 +15,24 @@ export const register = createAsyncThunk(
         return { ...res.data, rememberMe };
     }
 );
+
+export const login = createAsyncThunk(
+    "user/login",
+    async ({ username, password, rememberMe }) => {
+        const res = await axios.post("/login", {
+            username,
+            password,
+        });
+
+        return { ...res.data, rememberMe };
+    }
+);
+
+export const refresh = createAsyncThunk("user/refresh", async () => {
+    const res = await axios.post("/refresh");
+
+    return { ...res.data };
+});
 
 const initialState = {
     username: "",
@@ -32,12 +50,15 @@ export const userSlice = createSlice({
         setUserInfo: (state, action) => {
             const { username, email, accessToken, _id, createdAt, avatar } =
                 action.payload;
-            state.username = username;
-            state.avatar = avatar;
-            state.accessToken = accessToken;
-            state.id = _id;
-            state.createdAt = createdAt;
-            state.email = email;
+
+            state = {
+                username,
+                avatar,
+                accessToken,
+                id: _id,
+                createdAt,
+                email,
+            };
         },
     },
     extraReducers: (builder) => {
@@ -49,20 +70,54 @@ export const userSlice = createSlice({
                 if (rememberMe) {
                     Cookies.set("refresh", refreshToken, {
                         expires: 30,
-                        path: "/refresh",
                     });
                 }
-
                 state.accessToken = accessToken;
                 state.avatar = user.avatar;
-                state.username = user.username;
                 state.createdAt = user.createdAt;
                 state.id = user._id;
                 state.email = user.email;
+                state.username = user.username;
+
                 toast.success("Đăng ký ok rồi!");
             })
-            .addCase(register.rejected, (state, action) => {
+            .addCase(register.rejected, () => {
                 toast.error("Không đăng ký được");
+            })
+            .addCase(login.fulfilled, (state, action) => {
+                const { user, accessToken, refreshToken, rememberMe } =
+                    action.payload;
+
+                if (rememberMe) {
+                    Cookies.set("refresh", refreshToken, {
+                        expires: 30,
+                    });
+                }
+                state.accessToken = accessToken;
+                state.avatar = user.avatar;
+                state.createdAt = user.createdAt;
+                state.id = user._id;
+                state.email = user.email;
+                state.username = user.username;
+
+                toast.success("Đăng nhập ok rồi!");
+            })
+            .addCase(login.rejected, () => {
+                toast.error("Không đăng nhập được");
+            })
+            .addCase(refresh.fulfilled, (state, action) => {
+                const { user, accessToken } = action.payload;
+
+                state.accessToken = accessToken;
+                state.avatar = user.avatar;
+                state.createdAt = user.createdAt;
+                state.id = user._id;
+                state.email = user.email;
+                state.username = user.username;
+            })
+            .addCase(refresh.rejected, () => {
+                toast.error("Không đăng nhập được");
+                Cookies.remove("refresh");
             });
     },
 });

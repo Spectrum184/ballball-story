@@ -2,7 +2,7 @@ import "./styles.css";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { register } from "../../redux/userSlice";
+import { login, register } from "../../redux/userSlice";
 
 const AuthForm = ({ isLoginPage = true }) => {
     const userProfile = {
@@ -33,7 +33,7 @@ const AuthForm = ({ isLoginPage = true }) => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        console.log(profileData);
+
         if (username.length < 6 || username.length > 30) {
             setProfileDataError({
                 ...profileDataError,
@@ -50,7 +50,7 @@ const AuthForm = ({ isLoginPage = true }) => {
             return;
         }
 
-        if (password !== confirmPassword) {
+        if (password !== confirmPassword && !isLoginPage) {
             setProfileDataError({
                 ...profileDataError,
                 passwordError: "Bị ngáo à!",
@@ -60,6 +60,13 @@ const AuthForm = ({ isLoginPage = true }) => {
 
         setProfileDataError(userProfileError);
         if (isLoginPage) {
+            dispatch(
+                login({
+                    username,
+                    password,
+                    rememberMe,
+                })
+            );
         } else {
             dispatch(
                 register({

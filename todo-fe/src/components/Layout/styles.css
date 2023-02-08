@@ -1,0 +1,31 @@
+.navbar {
+    position: sticky;
+    height: 66px;
+    border-bottom: 1px solid #eaeaea;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.btn-logout {
+    background-color: #f05123;
+    border-radius: 999px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 9px 20px;
+    border-style: none;
+}
+
+.btn-logout:hover {
+    opacity: 0.8;
+}
+
+.search-todo {
+    padding: 6px 16px;
+    min-width: 200px;
+}
