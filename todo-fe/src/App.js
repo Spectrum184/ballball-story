@@ -7,10 +7,12 @@ import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { routes } from "./routers";
 import { useAuth } from "./hooks/useAuth";
 import { useEffect } from "react";
-import nprogress from "nprogress";
+import NProgress from "nprogress";
 import moment from "moment";
 
 moment.locale("vi");
+
+NProgress.configure({ easing: "ease", speed: 500, showSpinner: false });
 
 function generateRoute(route) {
     return (
@@ -25,20 +27,20 @@ function App() {
     const location = useLocation();
 
     useEffect(() => {
-        nprogress.start();
-        nprogress.done();
+        NProgress.start();
+        NProgress.done();
     }, [location.pathname]);
 
     useEffect(() => {
-        if (!isAuthenticated) {
+        if (!isAuthenticated && location.pathname !== "/register") {
             navigate("/login");
         }
-    }, [isAuthenticated, navigate]);
+    }, [isAuthenticated, navigate, location.pathname]);
 
     return (
         <main className="app">
             <ToastContainer />
-            <Routes>{routes.map(generateRoute)}</Routes>
+            <Routes>{routes.map((r) => generateRoute(r))}</Routes>
         </main>
     );
 }

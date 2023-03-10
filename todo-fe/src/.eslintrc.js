@@ -1,6 +1,6 @@
 module.exports = {
     extends: ["react-app"],
     rules: {
-        "additional-rule": "warn"
+        "additional-rule": "off"
     },
 }
