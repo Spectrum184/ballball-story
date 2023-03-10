@@ -23,9 +23,7 @@ const auth = async (req, res, next) => {
             });
         }
 
-        const user = await Users.findById(decoded.id);
-
-        req.user = user;
+        req.user = await Users.findById(decoded.id);
 
         next();
     } catch (error) {
