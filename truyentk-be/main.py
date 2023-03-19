@@ -8,3 +8,7 @@ async def root():
     return {
         "ok": "baby"
     }
+
+
+def testGit():
+    print("test")
