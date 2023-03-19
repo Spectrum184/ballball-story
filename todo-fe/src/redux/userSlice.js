@@ -9,7 +9,7 @@ export const register = createAsyncThunk(
         const res = await axios.post("/register", {
             username,
             password,
-            email,
+            email
         });
 
         return { ...res.data, rememberMe };
@@ -21,7 +21,7 @@ export const login = createAsyncThunk(
     async ({ username, password, rememberMe }) => {
         const res = await axios.post("/login", {
             username,
-            password,
+            password
         });
 
         return { ...res.data, rememberMe };
@@ -40,7 +40,7 @@ const initialState = {
     accessToken: "",
     id: "",
     avatar: "",
-    createdAt: "",
+    createdAt: ""
 };
 
 export const userSlice = createSlice({
@@ -57,9 +57,9 @@ export const userSlice = createSlice({
                 accessToken,
                 id: _id,
                 createdAt,
-                email,
+                email
             };
-        },
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -69,7 +69,7 @@ export const userSlice = createSlice({
 
                 if (rememberMe) {
                     Cookies.set("refresh", refreshToken, {
-                        expires: 30,
+                        expires: 30
                     });
                 }
                 state.accessToken = accessToken;
@@ -85,15 +85,15 @@ export const userSlice = createSlice({
                 toast.error("Không đăng ký được");
             })
             .addCase(login.fulfilled, (state, action) => {
-                const { user, accessToken, refreshToken, rememberMe } =
+                const { user, refreshToken, rememberMe } =
                     action.payload;
 
                 if (rememberMe) {
                     Cookies.set("refresh", refreshToken, {
-                        expires: 30,
+                        expires: 30
                     });
                 }
-                state.accessToken = accessToken;
+                state.accessToken = action.payload.accessToken;
                 state.avatar = user.avatar;
                 state.createdAt = user.createdAt;
                 state.id = user._id;
@@ -106,9 +106,9 @@ export const userSlice = createSlice({
                 toast.error("Không đăng nhập được");
             })
             .addCase(refresh.fulfilled, (state, action) => {
-                const { user, accessToken } = action.payload;
+                const { user } = action.payload;
 
-                state.accessToken = accessToken;
+                state.accessToken = action.payload.accessToken;
                 state.avatar = user.avatar;
                 state.createdAt = user.createdAt;
                 state.id = user._id;
@@ -119,7 +119,7 @@ export const userSlice = createSlice({
                 toast.error("Không đăng nhập được");
                 Cookies.remove("refresh");
             });
-    },
+    }
 });
 
 export const { setUserInfo } = userSlice.actions;

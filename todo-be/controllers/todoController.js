@@ -91,9 +91,31 @@ const todoCtrl = {
 
             const todo = await Todo.findById(id);
 
+            // //
+            // Todo.find({
+            //     userId: req.user._id
+            // })
+
             return res.status(200).json({
                 message: "Done",
                 todo,
+            });
+        } catch (error) {
+            return res.status(500).json({
+                message: error.message || "Ok",
+            });
+        }
+    },
+
+    getTodoByUserId: async (req, res) => {
+        try {
+            const todo = await Todo.find({
+                userId: req.user._id,
+            });
+
+            return res.status(200).json({
+                message: "Done",
+                todo: todo || [],
             });
         } catch (error) {
             return res.status(500).json({

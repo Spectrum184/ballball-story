@@ -22,6 +22,7 @@ app.get("/health", function (req, res) {
     });
 });
 
+// router
 app.use(routers);
 
 mongoose.set("strictQuery", false);
