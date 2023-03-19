@@ -1,9 +1,10 @@
 const Users = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 
-const auth = async (req, res, next) => {
+const role = async (req, res, next) => {
     try {
         const accessToken = req.header("Authorization");
+        console.log("accessToken", accessToken);
 
         if (!accessToken) {
             return res.status(403).json({
@@ -16,6 +17,8 @@ const auth = async (req, res, next) => {
             process.env.ACCESS_TOKEN_SECRET
         );
 
+        console.log("Decoded", decoded);
+
         if (!decoded) {
             return res.status(403).json({
                 message: "Get out",
@@ -24,10 +27,12 @@ const auth = async (req, res, next) => {
 
         const user = await Users.findOne({
             _id: decoded.id,
-        }).select("-password");
+        });
 
-        if (!user) {
-            return res.status(403).json({
+        console.log(user);
+
+        if (user.role !== "ADMIN") {
+            return res.status(401).json({
                 message: "Get out",
             });
         }
@@ -42,4 +47,4 @@ const auth = async (req, res, next) => {
     }
 };
 
-module.exports = auth;
+module.exports = role;

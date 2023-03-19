@@ -19,6 +19,19 @@ const userSchema = new mongoose.Schema(
             default:
                 "https://res.cloudinary.com/thanhtk/image/upload/v1667888214/fqhp3ifo52dbswrjmxta.jpg",
         },
+        isBanned: {
+            type: Boolean,
+            default: false,
+        },
+        // soft delete
+        deletedAt: {
+            type: Date,
+            default: null,
+        },
+        role: {
+            type: String,
+            default: "USER",
+        },
     },
     {
         timestamps: true,
