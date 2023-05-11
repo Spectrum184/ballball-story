@@ -1,12 +1,14 @@
-import "./styles.css";
-import React from "react";
-import Header from "./Header";
+import React from 'react';
+import Header from './Header';
+import SideBar from './SideBar';
+import Footer from './Footer';
 
 const Layout = ({ children }) => {
     return (
         <div>
             <Header />
-            <div className="main-wrapper">{children}</div>
+            <SideBar />
+            <Footer />
         </div>
     );
 };

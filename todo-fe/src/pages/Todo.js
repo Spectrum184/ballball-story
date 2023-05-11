@@ -1,8 +1,8 @@
-import React, { memo, useEffect, useState } from "react";
-import Layout from "../components/Layout";
-import { useSelector } from "react-redux";
-import { getDataApi } from "../utils/axios";
-import { toast } from "react-toastify";
+import React, { memo, useEffect, useState } from 'react';
+import Layout from '../components/Layout';
+import { useSelector } from 'react-redux';
+import { getDataApi } from '../utils/axios';
+import { toast } from 'react-toastify';
 
 const Todo = () => {
     const { accessToken } = useSelector((state) => state.user);
@@ -32,12 +32,12 @@ const Todo = () => {
 
             const getData = async () => {
                 try {
-                    const res = await getDataApi("todo", accessToken);
+                    const res = await getDataApi('todo', accessToken);
                     console.log(res);
                     setTodo(res.todo || []);
                 } catch (error) {
                     console.error(error);
-                    toast.error("Something go wrong!");
+                    toast.error('Something go wrong!');
                     setTodo(null);
                 }
             };
