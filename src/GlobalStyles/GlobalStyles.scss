@@ -1,0 +1,45 @@
+@import 'normalize.css';
+:root {
+    --primary: #fe2c55;
+    --black: #000;
+    --white: #fff;
+    --text-color: #161823;
+    --hover-color: #4497f8;
+
+    --font-family: 'ProximaNova', sans-serif;
+
+    // Default layout
+    --default-layout-header-height: 66px;
+    --default-layout-width: 1200px;
+    --default-layout-horizontal-spacer: 24px;
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-size: 1.6rem;
+    line-height: 1.5rem;
+}
+
+button,
+input {
+    outline: none;
+    border: none;
+}
+
+a {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.ct {
+}
+//font-embedded-

@@ -1,0 +1,40 @@
+.box {
+    width: 100%;
+}
+.ten {
+    font-size: 16px;
+    line-height: 32px;
+    width: 100%;
+}
+.search {
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    border: 2px solid #e8e8e8;
+    border-radius: 20px;
+    height: 40px;
+    padding: 16px;
+    transition: border-color 0.2s ease-in-out;
+    &:hover {
+        border: 2px solid #101010;
+    }
+    .search-input {
+        line-height: 48px;
+        border: none;
+
+        flex: 1 1;
+        height: 32px;
+        outline: none;
+
+        background-color: none;
+        max-width: 100%;
+    }
+    .search-btn {
+        height: 32px;
+        opacity: 0.5;
+        transition: opacity 0.2s ease-in-out;
+        width: 32px;
+    }
+}
